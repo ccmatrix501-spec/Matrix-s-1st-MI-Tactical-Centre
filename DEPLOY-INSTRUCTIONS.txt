@@ -1,0 +1,23 @@
+1st M.I. Tactical Centre — READY-TO-HOST MOBILE WEBSITE
+
+This folder is the finished static website.
+
+TO CREATE A PUBLIC WEB LINK:
+1. Extract this ZIP.
+2. Upload every file and folder inside it to a static website host.
+3. Open the URL supplied by that host.
+
+IMPORTANT:
+- Keep the folder structure unchanged.
+- index.html must remain at the website root.
+- The assets folder must be uploaded completely.
+- HTTPS is required by browsers for full installable-PWA/offline support.
+
+MOBILE:
+- Android/Chrome: browser menu → Install app / Add to Home screen.
+- iPhone/iPad/Safari: Share → Add to Home Screen.
+
+WEB SAVE SYSTEM:
+- Exported saves download as JSON files.
+- Open Save Scanner and choose Import JSON Save to reopen them.
+- The automatic Windows folder scanner and game overlay remain desktop-only.
