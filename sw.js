@@ -1,51 +1,16 @@
-const CACHE_NAME = "mi-tactical-centre-v1.3.9";
-const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.png"];
+const CACHE_NAME = "mi-tactical-centre-disabled-v1.4.0";
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
-  );
+self.addEventListener("install", () => {
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      ))
+      .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+      .then(() => self.registration.unregister())
       .then(() => self.clients.claim())
   );
 });
 
-self.addEventListener("message", (event) => {
-  if (event.data === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
-
-self.addEventListener("fetch", (event) => {
-  const request = event.request;
-  if (request.method !== "GET") return;
-
-  const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
-
-  event.respondWith(
-    fetch(request, { cache: "no-store" })
-      .then((response) => {
-        if (response && response.status === 200) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
-        }
-        return response;
-      })
-      .catch(async () => {
-        const cached = await caches.match(request);
-        if (cached) return cached;
-        if (request.mode === "navigate") return caches.match("./index.html");
-        throw new Error("Resource unavailable offline");
-      })
-  );
-});
+// Intentionally no fetch handler. GitHub Pages should always serve the latest build.

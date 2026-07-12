@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050607" />
+  <title>Refreshing Tactical Centre</title>
+  <style>
+    :root { color-scheme: dark; font-family: Arial, Helvetica, sans-serif; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #050607; color: #fff; }
+    main { width: min(520px, calc(100vw - 32px)); padding: 24px; border: 2px solid #ff7300; border-radius: 18px; background: #111216; text-align: center; }
+    h1 { margin-top: 0; color: #ff8a2b; }
+    p { line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Refreshing Tactical Centre</h1>
+    <p id="status">Removing the old mobile build and cached files…</p>
+  </main>
+  <script>
+    (async () => {
+      const status = document.getElementById('status');
+      try {
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((registration) => registration.unregister()));
+        }
+        if ('caches' in window) {
+          const names = await caches.keys();
+          await Promise.all(names.map((name) => caches.delete(name)));
+        }
+        for (let index = localStorage.length - 1; index >= 0; index -= 1) {
+          const key = localStorage.key(index);
+          if (key && key.startsWith('mi-web-cache-reset-')) localStorage.removeItem(key);
+        }
+        status.textContent = 'Cache cleared. Opening mobile web build v1.4.0…';
+      } catch (error) {
+        status.textContent = 'Opening the latest build…';
+      }
+      window.setTimeout(() => {
+        const target = new URL('./', window.location.href);
+        target.searchParams.set('build', '140');
+        target.searchParams.set('fresh', Date.now().toString());
+        window.location.replace(target.toString());
+      }, 700);
+    })();
+  </script>
+</body>
+</html>
