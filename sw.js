@@ -1,4 +1,4 @@
-const CACHE_NAME = "mi-tactical-centre-v1";
+const CACHE_NAME = "mi-tactical-centre-v3";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.png"];
 
 self.addEventListener("install", (event) => {
