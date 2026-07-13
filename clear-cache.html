@@ -34,13 +34,13 @@
           const key = localStorage.key(index);
           if (key && key.startsWith('mi-web-cache-reset-')) localStorage.removeItem(key);
         }
-        status.textContent = 'Cache cleared. Opening mobile web build v1.4.3…';
+        status.textContent = 'Cache cleared. Opening mobile web build v1.4.4…';
       } catch (error) {
         status.textContent = 'Opening the latest build…';
       }
       window.setTimeout(() => {
         const target = new URL('./', window.location.href);
-        target.searchParams.set('build', '143');
+        target.searchParams.set('build', '144');
         target.searchParams.set('fresh', Date.now().toString());
         window.location.replace(target.toString());
       }, 700);

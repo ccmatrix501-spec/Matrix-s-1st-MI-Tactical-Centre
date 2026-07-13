@@ -1,4 +1,4 @@
-const CACHE_NAME = "mi-tactical-centre-disabled-v1.4.3";
+const CACHE_NAME = "mi-tactical-centre-disabled-v1.4.4";
 
 self.addEventListener("install", () => {
   self.skipWaiting();
